@@ -76,9 +76,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
        holder.TextView_Title.setText(news.getTitle());
        holder.TextView_Content.setText(news.getContent());
-        Uri uri = Uri.parse(news.getUrlToImage());
-
-        holder.imageview.setImageURI(uri);
+       Uri uri = Uri.parse(news.getUrlToImage());
+       holder.imageview.setImageURI(uri);
         //이미지의 주소를 가져오기 위한 것이 fresco
     }
 

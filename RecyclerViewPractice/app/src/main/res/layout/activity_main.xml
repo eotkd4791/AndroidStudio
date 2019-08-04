@@ -5,12 +5,14 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/main_text"
+        android:id="@+id/TextView_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="리사이클러 뷰를 연습하자!"
         android:textSize="30dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:clickable="true" />
+        android:clickable="true"
+        android:onClick="TextView_main"/>
+
 </LinearLayout>
