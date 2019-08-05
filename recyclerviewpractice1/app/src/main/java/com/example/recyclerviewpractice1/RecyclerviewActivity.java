@@ -44,22 +44,21 @@ public class RecyclerviewActivity extends AppCompatActivity {
         String url ="https://newsapi.org/v2/top-headlines?country=kr&category=sports&apiKey=c8e9be2d28fb414189aa462890158209";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
-                    //  Log.d("NEWS: ", response);
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObj = new JSONObject(response);
-                            JSONArray arrayaArticles =  jsonObj.getJSONArray("articles");
+                            JSONArray arrayArticles =  jsonObj.getJSONArray("articles");
                             //가져오려는 뉴스API의 아티클이 배열구조이기떄문에 ..
 
                             List<NewsData> news = new ArrayList<>();
-                            for (int i=0, j=arrayaArticles.length(); i<j; i++)  {
-                                JSONObject obj = arrayaArticles.getJSONObject(i);
+                            for (int i=0, j=arrayArticles.length(); i<j; i++)  {
+                                JSONObject obj = arrayArticles.getJSONObject(i);
 
                                 NewsData newsData = new NewsData();
                                 newsData.setTitle(obj.getString("title"));
-                                newsData.setUrlToImage(obj.getString("urlToTImage"));
-                                newsData.setContent( obj.getString("content"));
+                                newsData.setUrlToImage(obj.getString("urlToImage"));
+                                newsData.setContent(obj.getString("description"));
                                 news.add(newsData);
                             }
 
