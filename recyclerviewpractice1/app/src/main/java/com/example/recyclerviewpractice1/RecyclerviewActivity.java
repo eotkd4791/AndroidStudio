@@ -1,41 +1,41 @@
 package com.example.recyclerviewpractice1;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+    import android.os.Bundle;
+    import android.support.v7.app.AppCompatActivity;
+    import android.support.v7.widget.LinearLayoutManager;
+    import android.support.v7.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+    import com.android.volley.Request;
+    import com.android.volley.RequestQueue;
+    import com.android.volley.Response;
+    import com.android.volley.VolleyError;
+    import com.android.volley.toolbox.StringRequest;
+    import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+    import org.json.JSONArray;
+    import org.json.JSONException;
+    import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+    import java.util.ArrayList;
+    import java.util.List;
 
 public class RecyclerviewActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private String[] mDataset={"1","2"};
-    RequestQueue queue;
+    RequestQueue queue;//전역변수로 바꾼다.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview);
-        recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        recyclerView = findViewById(R.id.my_recycler_view);
+
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
+
         queue =  Volley.newRequestQueue(this);
         getNews();
     }
@@ -44,26 +44,30 @@ public class RecyclerviewActivity extends AppCompatActivity {
         String url ="https://newsapi.org/v2/top-headlines?country=kr&category=sports&apiKey=c8e9be2d28fb414189aa462890158209";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
+                    //  Log.d("NEWS: ", response);
                     @Override
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObj = new JSONObject(response);
                             JSONArray arrayaArticles =  jsonObj.getJSONArray("articles");
+                            //가져오려는 뉴스API의 아티클이 배열구조이기떄문에 ..
 
                             List<NewsData> news = new ArrayList<>();
-                            for (int i=0, j=arrayaArticles.length(); i < j; i++)  {
+                            for (int i=0, j=arrayaArticles.length(); i<j; i++)  {
                                 JSONObject obj = arrayaArticles.getJSONObject(i);
 
                                 NewsData newsData = new NewsData();
                                 newsData.setTitle(obj.getString("title"));
                                 newsData.setUrlToImage(obj.getString("urlToTImage"));
-                                newsData.setContent( obj.getString("description"));
+                                newsData.setContent( obj.getString("content"));
                                 news.add(newsData);
                             }
 
                             //데이터를 NewsData에서 분류한다.
-                            mAdapter = new MyAdapter(news, RecyclerviewActivity.this);
-                            recyclerView.setAdapter(mAdapter);
+                            mAdapter = new MyAdapter(news, RecyclerviewActivity.this);//받아온 입력값을 MyAdapter자바 파일의 #5부분으로 전달하는 코드
+                            //fresco설정 시에 RecyclerviewActivity.this를 추가하여 준다. #6
+
+                            recyclerView.setAdapter(mAdapter);// 그래서 이 부분에 초기값을 세팅해야한다.
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -78,7 +82,7 @@ public class RecyclerviewActivity extends AppCompatActivity {
             }
         });
 
-
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 }
