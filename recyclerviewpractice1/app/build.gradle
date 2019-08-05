@@ -4,7 +4,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.mod.whistleon"
+        applicationId "com.example.recyclerviewpractice1"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1

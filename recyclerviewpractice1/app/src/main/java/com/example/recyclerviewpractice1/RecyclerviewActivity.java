@@ -4,6 +4,7 @@ package com.example.recyclerviewpractice1;
     import android.support.v7.app.AppCompatActivity;
     import android.support.v7.widget.LinearLayoutManager;
     import android.support.v7.widget.RecyclerView;
+    import android.util.Log;
 
     import com.android.volley.Request;
     import com.android.volley.RequestQueue;
@@ -35,7 +36,7 @@ public class RecyclerviewActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-
+        ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.HORIZONTAL);
         queue =  Volley.newRequestQueue(this);
         getNews();
     }

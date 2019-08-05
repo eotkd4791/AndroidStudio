@@ -23,17 +23,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // 한 줄에 들어가는 요소를 정하는 홀더
         public TextView TextView_Title;//3번 과정 -텍스트 2개에 이미지 1개만큼 추가해준다.
         public TextView TextView_Content; //Title은 제목,Content는 본문
-        public SimpleDraweeView imageview;
+        public SimpleDraweeView SimpleDraweeView_image;
         public MyViewHolder(View v) {//#5
             super(v);
             //받아온 자식들
-            TextView_Title      =   v.findViewById(R.id.TextView_Title);//3번 과정 및, 2번 과정 #4
-            TextView_Content    =   v.findViewById(R.id.TextView_Content);
-            imageview           =   v.findViewById(R.id.imageview);
-
-
-
-
+            TextView_Title               =   v.findViewById(R.id.TextView_Title);//3번 과정 및, 2번 과정 #4
+            TextView_Content             =   v.findViewById(R.id.TextView_Content);
+            SimpleDraweeView_image       =   v.findViewById(R.id.SimpleDraweeView_image);
             //연결을 하는 과정은 레이아웃끼리 연결하는 setContent만 하는 기존의 방식과 다르다.
             //리사이클러뷰 내부에서 특정한 어떤 부분 부분을 바꾸는 것이기 때문에 #4부분에서 v.find id해준다.
             //why?액티비티에서 바로 찾아갈때는 액티비티 자체가 부모의 뷰이기 때문에 바로 찾아갈 수 있다.find id
@@ -50,7 +46,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         //context를 받아오는 것은 메모리 누수가 날 수 있기 때문에 권장하진 않는다.
     }
 
-    // Create new views (invoked by the layout manager)
+
     @Override
     public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // 한 로고의 이미지 파일을 연결하는 부분.
@@ -77,7 +73,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         holder.TextView_Title.setText(news.getTitle());
         holder.TextView_Content.setText(news.getContent());
         Uri uri = Uri.parse(news.getUrlToImage());
-        holder.imageview.setImageURI(uri);
+        holder.SimpleDraweeView_image.setImageURI(uri);
         //이미지의 주소를 가져오기 위한 것이 fresco
     }
 
