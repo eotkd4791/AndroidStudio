@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-
+///////////////////////////////////////////////////////변수 선언부-전역변수//////////////
     private Spinner spinnerCity, spinnerSigungu, spinnerDong, spinnerStadium;
     ArrayAdapter<String> arrayAdapter;
 
@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
     String Selected_City        =   new String();
     String Selected_District    =   new String();
-
+////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//////////////////////////////////////////////////////////////////onCreate/////////////////////////////
         spinnerCity     = (Spinner)findViewById(R.id.Spinner_city);
         spinnerSigungu  = (Spinner)findViewById(R.id.Spinner_district);
         spinnerDong     = (Spinner)findViewById(R.id.Spinner_detail);
@@ -58,11 +58,10 @@ public class MainActivity extends AppCompatActivity {
         Log.d("주소셋팅","주소셋팅 들갔나" );
         initAddressSpinner();
         Log.d("주소셋팅","주소셋팅 나왔나" );
-
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
+///////////////////////////////////////////////////////////Asset폴더에서 JSON파일 열고 문자열 받아오기//////////////
     private String getJsonString() {
         Log.d("getJsonString","제이슨 스트링 받아오기함수 들어왔어");
 
@@ -84,14 +83,17 @@ public class MainActivity extends AppCompatActivity {
 
         return json;
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+///////////////////////////////////////////////////////////////////////////////클래스 선언//////////////
     public class Stadium_compo{
         private String CityOfStadium;
         private String DistrictOfStadium;
         private String StadiumOfStadium;
 
 
-        public String getCity() {
+        public String getCity() {//getter와 setter 셋팅하기
             return CityOfStadium;
         }
 
@@ -117,64 +119,66 @@ public class MainActivity extends AppCompatActivity {
             this.StadiumOfStadium = StadiumOfStadium;
         }
     }
-
+///////////////////////////////////////////////////////////////////////////////////////JSON파싱/////////////////////
     private void jsonParsing(String json)
     {
         Log.d("jsonParsing","파싱함수에 들어왔어");
+        Log.d("Selected_city","파싱 - 선택된 도시 " + Selected_City);
+        Log.d("Selected_district","파싱 - 선택된 구 " + Selected_District);
 
         try{
             JSONObject jsonObject = new JSONObject(json);
             JSONArray stadiumInfoArray = new JSONArray();
 
-            if(Selected_City=="서울특별시") {
+            if(Selected_City.equals("서울특별시")) {// "=="연산자쓰다가 .equals()메소드로 바꾸니까 잘된당.
                 stadiumInfoArray = jsonObject.getJSONArray("서울특별시");
             }
-           else if(Selected_City=="부산광역시") {
+           else if(Selected_City.equals("부산광역시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("부산광역시");
             }
-           else if(Selected_City=="대구광역시") {
+           else if(Selected_City.equals("대구광역시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("대구광역시");
             }
-            else if(Selected_City=="인천광역시") {
+            else if(Selected_City.equals("인천광역시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("인천광역시");
             }
-            else if(Selected_City=="광주광역시") {
+            else if(Selected_City.equals("광주광역시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("광주광역시");
             }
-            else if(Selected_City=="대전광역시") {
+            else if(Selected_City.equals("대전광역시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("대전광역시");
             }
-            else if(Selected_City=="울산광역시") {
+            else if(Selected_City.equals("울산광역시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("울산광역시");
             }
-            else if(Selected_City=="세종특별자치시") {
+            else if(Selected_City.equals("세종특별자치시")) {
                 stadiumInfoArray = jsonObject.getJSONArray("세종특별자치시");
             }
-            else if(Selected_City=="경기도") {
+            else if(Selected_City.equals("경기도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("경기도");
             }
-            else if(Selected_City=="강원도") {
+            else if(Selected_City.equals("강원도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("강원도");
             }
-            else if(Selected_City=="충청북도") {
+            else if(Selected_City.equals("충청북도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("충청북도");
             }
-            else if(Selected_City=="충청남도") {
+            else if(Selected_City.equals("충청남도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("충청남도");
             }
-            else if(Selected_City=="전라북도") {
+            else if(Selected_City.equals("전라북도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("전라북도");
             }
-            else if(Selected_City=="전라남도") {
+            else if(Selected_City.equals("전라남도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("전라남도");
             }
-            else if(Selected_City=="경상북도") {
+            else if(Selected_City.equals("경상북도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("경상북도");
             }
-            else if(Selected_City=="경상남도") {
+            else if(Selected_City.equals("경상남도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("경상남도");
             }
-            else if(Selected_City=="제주특별자치도") {
+            else if(Selected_City.equals("제주특별자치도")) {
                 stadiumInfoArray = jsonObject.getJSONArray("제주특별자치도");
             }
 
@@ -196,13 +200,15 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("stInfo.setDistrict","구값 " + stInfo.getDistrict());
                 Log.d("stInfo.setStadium","경기장값 " + stInfo.getStadium());
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-                if(Selected_City==stInfo.getCity() && Selected_District==stInfo.getDistrict()){
+
+                Log.d("Selected_city","추출 전 선택된 도시 " + Selected_City);
+                Log.d("Selected_district","추출 전 선택된 구 " + Selected_District);
+
+                if(Selected_City.equals(stInfo.getCity()) && Selected_District.equals(stInfo.getDistrict())){
                     Log.d("stListresult.add","추출한 경기장값 " + stInfo.getStadium());
                     String st_val= stObject.getString("stadium");
                     stListresult.add(st_val);
                 }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////
                 Log.d("stadium_Object","배열리스트에 넣기 전에 값 셋팅");
 
                 stList.add(stInfo);
@@ -212,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("stadium_Object","JSON값 셋팅하는 for문 탈출");
 
             stAdapterresult = new ArrayAdapter<>(this,android.R.layout.simple_spinner_dropdown_item,stListresult);
-            //stAdapterresult.setDropDownViewResource();
+           // stAdapterresult.setDropDownViewResource();
             spinnerStadium.setAdapter(stAdapterresult);
             Log.d("String","Stadium 아답타 세팅");
 
@@ -221,7 +227,9 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+///////////////////////////////////////////////////////////////주소 셋팅/////////////////////////////////
     private void initAddressSpinner() {
         spinnerCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -355,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
                     switch(position) {
                         //25
                         case 0:
-                            Selected_District=null;
+
                         case 1:
                             setDongSpinnerAdapterItem(R.array.spinner_region_seoul_gangnam);
                             break;
@@ -447,9 +455,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+//////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+/////////////////////////////////////////ArrayAdapter 셋팅부///////////////////////////////
     private void setSigunguSpinnerAdapterItem(int array_resource) {
         if (arrayAdapter != null) {
             spinnerSigungu.setAdapter(null);
@@ -476,3 +484,4 @@ public class MainActivity extends AppCompatActivity {
         spinnerDong.setAdapter(arrayAdapter);
     }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
